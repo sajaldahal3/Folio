@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folio - Google Drive Office Suite</title>
+    <link rel="stylesheet" href="design-system.css">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Loading Screen -->
+        <div id="loading-screen" class="screen active">
+            <div class="loading-content">
+                <div class="logo-large">
+                    <span class="material-icons-round">description</span>
+                </div>
+                <h1>Folio</h1>
+                <div class="spinner"></div>
+                <p>Loading your workspace...</p>
+            </div>
+        </div>
+
+        <!-- Auth Screen -->
+        <div id="auth-screen" class="screen">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="logo-large">
+                        <span class="material-icons-round">description</span>
+                    </div>
+                    <h1>Welcome to Folio</h1>
+                    <p>Your Google Drive-native office suite</p>
+                    <button id="btn-signin-google" class="btn btn-primary btn-lg">
+                        <span class="material-icons-round">login</span>
+                        Sign in with Google
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main App Layout -->
+        <div id="main-layout" class="screen">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <div class="logo-small">
+                        <span class="material-icons-round">description</span>
+                        <span>Folio</span>
+                    </div>
+                </div>
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item active" data-view="dashboard">
+                        <span class="material-icons-round">dashboard</span>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="nav-item" data-view="files">
+                        <span class="material-icons-round">folder</span>
+                        <span>Files</span>
+                    </a>
+                    <a href="#" class="nav-item" data-view="docs">
+                        <span class="material-icons-round">article</span>
+                        <span>Documents</span>
+                    </a>
+                    <a href="#" class="nav-item" data-view="sheets">
+                        <span class="material-icons-round">table_chart</span>
+                        <span>Spreadsheets</span>
+                    </a>
+                    <a href="#" class="nav-item" data-view="slides">
+                        <span class="material-icons-round">presentation</span>
+                        <span>Presentations</span>
+                    </a>
+                    <a href="#" class="nav-item" data-view="scanner">
+                        <span class="material-icons-round">document_scanner</span>
+                        <span>Scanner</span>
+                    </a>
+                    <a href="#" class="nav-item" data-view="gmail">
+                        <span class="material-icons-round">mail</span>
+                        <span>Gmail</span>
+                    </a>
+                </nav>
+                <div class="sidebar-footer">
+                    <a href="#" class="nav-item" data-view="settings">
+                        <span class="material-icons-round">settings</span>
+                        <span>Settings</span>
+                    </a>
+                    <button id="btn-signout" class="nav-item">
+                        <span class="material-icons-round">logout</span>
+                        <span>Sign Out</span>
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="main-content">
+                <!-- Top Bar -->
+                <header class="top-bar">
+                    <div class="search-bar">
+                        <span class="material-icons-round">search</span>
+                        <input type="text" placeholder="Search in Drive..." id="search-input">
+                    </div>
+                    <div class="user-menu">
+                        <button class="icon-btn" id="btn-new">
+                            <span class="material-icons-round">add</span>
+                        </button>
+                        <button class="icon-btn" id="btn-notifications">
+                            <span class="material-icons-round">notifications</span>
+                            <span class="badge">3</span>
+                        </button>
+                        <div class="avatar" id="user-avatar">
+                            <img src="" alt="User" id="user-avatar-img">
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Views -->
+                <div class="views-container">
+                    <!-- Dashboard View -->
+                    <div id="view-dashboard" class="view active">
+                        <div class="view-header">
+                            <h2>Dashboard</h2>
+                            <button class="btn btn-primary" id="btn-create-doc">
+                                <span class="material-icons-round">add</span>
+                                New Document
+                            </button>
+                        </div>
+                        <div class="dashboard-grid">
+                            <div class="card stat-card">
+                                <div class="stat-icon blue">
+                                    <span class="material-icons-round">article</span>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>Documents</h3>
+                                    <p id="stat-docs-count">0</p>
+                                </div>
+                            </div>
+                            <div class="card stat-card">
+                                <div class="stat-icon green">
+                                    <span class="material-icons-round">table_chart</span>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>Spreadsheets</h3>
+                                    <p id="stat-sheets-count">0</p>
+                                </div>
+                            </div>
+                            <div class="card stat-card">
+                                <div class="stat-icon yellow">
+                                    <span class="material-icons-round">presentation</span>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>Presentations</h3>
+                                    <p id="stat-slides-count">0</p>
+                                </div>
+                            </div>
+                            <div class="card stat-card">
+                                <div class="stat-icon purple">
+                                    <span class="material-icons-round">folder</span>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>Total Files</h3>
+                                    <p id="stat-total-count">0</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="recent-files">
+                            <h3>Recent Files</h3>
+                            <div class="file-list" id="recent-files-list">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Files View -->
+                    <div id="view-files" class="view">
+                        <div class="view-header">
+                            <h2>My Drive</h2>
+                            <div class="view-actions">
+                                <button class="icon-btn" id="btn-view-grid">
+                                    <span class="material-icons-round">grid_view</span>
+                                </button>
+                                <button class="icon-btn" id="btn-view-list">
+                                    <span class="material-icons-round">view_list</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="file-browser" id="file-browser">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Docs View -->
+                    <div id="view-docs" class="view">
+                        <div class="view-header">
+                            <h2>Documents</h2>
+                            <button class="btn btn-primary" id="btn-new-doc">
+                                <span class="material-icons-round">add</span>
+                                New Document
+                            </button>
+                        </div>
+                        <div class="file-list" id="docs-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Sheets View -->
+                    <div id="view-sheets" class="view">
+                        <div class="view-header">
+                            <h2>Spreadsheets</h2>
+                            <button class="btn btn-primary" id="btn-new-sheet">
+                                <span class="material-icons-round">add</span>
+                                New Spreadsheet
+                            </button>
+                        </div>
+                        <div class="file-list" id="sheets-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Slides View -->
+                    <div id="view-slides" class="view">
+                        <div class="view-header">
+                            <h2>Presentations</h2>
+                            <button class="btn btn-primary" id="btn-new-slide">
+                                <span class="material-icons-round">add</span>
+                                New Presentation
+                            </button>
+                        </div>
+                        <div class="file-list" id="slides-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Scanner View -->
+                    <div id="view-scanner" class="view">
+                        <div class="view-header">
+                            <h2>Document Scanner</h2>
+                        </div>
+                        <div class="scanner-container">
+                            <div class="scanner-preview">
+                                <video id="scanner-video" autoplay playsinline></video>
+                                <canvas id="scanner-canvas"></canvas>
+                                <div class="scanner-overlay">
+                                    <div class="crop-box"></div>
+                                </div>
+                            </div>
+                            <div class="scanner-controls">
+                                <button class="btn btn-primary btn-lg" id="btn-capture">
+                                    <span class="material-icons-round">camera_alt</span>
+                                    Capture
+                                </button>
+                                <button class="btn btn-secondary" id="btn-toggle-camera">
+                                    <span class="material-icons-round">flip_camera_android</span>
+                                    Switch Camera
+                                </button>
+                            </div>
+                            <div class="scanner-results" id="scanner-results">
+                                <!-- Captured images appear here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gmail View -->
+                    <div id="view-gmail" class="view">
+                        <div class="view-header">
+                            <h2>Gmail Integration</h2>
+                            <button class="btn btn-primary" id="btn-compose">
+                                <span class="material-icons-round">edit</span>
+                                Compose
+                            </button>
+                        </div>
+                        <div class="gmail-container">
+                            <div class="gmail-sidebar">
+                                <div class="gmail-folder active" data-folder="inbox">
+                                    <span class="material-icons-round">inbox</span>
+                                    Inbox
+                                    <span class="count" id="gmail-inbox-count">0</span>
+                                </div>
+                                <div class="gmail-folder" data-folder="sent">
+                                    <span class="material-icons-round">send</span>
+                                    Sent
+                                </div>
+                                <div class="gmail-folder" data-folder="drafts">
+                                    <span class="material-icons-round">drafts</span>
+                                    Drafts
+                                    <span class="count" id="gmail-drafts-count">0</span>
+                                </div>
+                            </div>
+                            <div class="gmail-content">
+                                <div class="email-list" id="email-list">
+                                    <!-- Populated dynamically -->
+                                </div>
+                                <div class="email-viewer" id="email-viewer">
+                                    <!-- Email content appears here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Settings View -->
+                    <div id="view-settings" class="view">
+                        <div class="view-header">
+                            <h2>Settings</h2>
+                        </div>
+                        <div class="settings-container">
+                            <div class="settings-section">
+                                <h3>Appearance</h3>
+                                <div class="setting-item">
+                                    <span>Dark Mode</span>
+                                    <label class="switch">
+                                        <input type="checkbox" id="toggle-dark-mode">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="settings-section">
+                                <h3>Account</h3>
+                                <div class="setting-item">
+                                    <span>Connected Account</span>
+                                    <span id="connected-account">Not connected</span>
+                                </div>
+                                <button class="btn btn-danger" id="btn-disconnect">
+                                    Disconnect Account
+                                </button>
+                            </div>
+                            <div class="settings-section">
+                                <h3>About</h3>
+                                <p>Folio Version 1.0</p>
+                                <p>A Google Drive-native office suite.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Editor Modal -->
+        <div id="editor-modal" class="modal">
+            <div class="modal-content editor-container">
+                <div class="editor-header">
+                    <button class="icon-btn" id="btn-close-editor">
+                        <span class="material-icons-round">close</span>
+                    </button>
+                    <input type="text" class="editor-title" id="editor-title" value="Untitled Document">
+                    <div class="editor-actions">
+                        <button class="btn btn-secondary" id="btn-save">
+                            <span class="material-icons-round">save</span>
+                            Save
+                        </button>
+                        <button class="btn btn-primary" id="btn-export">
+                            <span class="material-icons-round">download</span>
+                            Export
+                        </button>
+                    </div>
+                </div>
+                <div class="editor-toolbar">
+                    <!-- Dynamic toolbar based on editor type -->
+                </div>
+                <div class="editor-body">
+                    <div id="doc-editor" class="editor-type hidden">
+                        <div contenteditable="true" class="doc-content"></div>
+                    </div>
+                    <div id="sheet-editor" class="editor-type hidden">
+                        <div class="sheet-grid"></div>
+                    </div>
+                    <div id="slide-editor" class="editor-type hidden">
+                        <div class="slide-canvas"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div id="toast-container"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://apis.google.com/js/api.js?client_id=YOUR_CLIENT_ID"></script>
+    <script src="app.js"></script>
+</body>
+</html>
